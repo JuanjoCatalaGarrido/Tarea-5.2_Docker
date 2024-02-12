@@ -16,13 +16,13 @@ services:
     container_name: mi-mongo
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-    hostname: mi-mongo
+    hostname: mi-mongo # el hostname del contenedor en red
     volumes:
-      - ./mi-volumen:/data/db/
+      - ./mi-volumen:/data/db/ # Montamos el volumen en /data/db/
     networks:
       - mi-red
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin 
+      - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=pass 
 
   mi-mongo-express:
