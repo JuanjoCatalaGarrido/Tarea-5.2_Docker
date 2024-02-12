@@ -1,0 +1,40 @@
+
+services:
+  mi-mysql:
+    image: mysql:latest
+    container_name: mi-mysql
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    hostname: mi-mysql
+    volumes:
+      - ./mi-mysql-vol:/var/lib/mysql
+    networks:
+      - mi-mysql-red
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+
+  mi-dashboard:
+    image: phpmyadmin:latest
+    container_name: mi-dashboard
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    hostname: mi-dashboard
+    ports:
+      - 8080:80
+    networks:
+      - mi-mysql-red
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_HOST=mi-mysql
+
+networks:
+  mi-mysql-red:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+volumes:
+  mi-mysql-vol:
+
+
